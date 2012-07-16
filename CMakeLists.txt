@@ -10,9 +10,19 @@ cmake_minimum_required(VERSION 2.8)
 # This is required to load our custom .cmake files
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+#
+# CTest/CDash configuration; see CTestConfig.cmake for more info!
 include(CTest)
 enable_testing()
 set(BUILDNAME "${BUILDNAME}" "Name of build on CDash dashboard")
+
+#
+# CPack configuration to build binary packages
+set(CPACK_PACKAGE_DESCRIPTION "#das-system Networks util library")
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "99")
+set(CPACK_PACKAGE_VERSION_PATCH "1")
+include(CPack)
 
 #
 # Check for log4cpp framework
