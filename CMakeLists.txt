@@ -18,11 +18,13 @@ set(BUILDNAME "${BUILDNAME}" "Name of build on CDash dashboard")
 
 #
 # CPack configuration to build binary packages
-set(CPACK_PACKAGE_DESCRIPTION "#das-system Networks util library")
-set(CPACK_PACKAGE_VERSION_MAJOR "0")
-set(CPACK_PACKAGE_VERSION_MINOR "99")
-set(CPACK_PACKAGE_VERSION_PATCH "1")
-include(CPack)
+if(NOT DSNUTIL_SUBPROJECT)
+  set(CPACK_PACKAGE_DESCRIPTION "#das-system Networks util library")
+  set(CPACK_PACKAGE_VERSION_MAJOR "0")
+  set(CPACK_PACKAGE_VERSION_MINOR "99")
+  set(CPACK_PACKAGE_VERSION_PATCH "1")
+  include(CPack)
+endif(NOT DSNUTIL_SUBPROJECT)
 
 #
 # Check for log4cpp framework
@@ -83,4 +85,6 @@ add_test(netutil-socketUDP test-netutil "2")
 
 #
 # Add 'doc' target to build if Doxygen is installed
-include(DocTarget)
+if(NOT DSNUTIL_SUBPROJECT)
+  include(DocTarget)
+endif(NOT DSNUTIL_SUBPROJECT)
