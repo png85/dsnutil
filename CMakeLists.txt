@@ -1,0 +1,76 @@
+#
+# libdsnutil: DAS-SYSTEM Networks utility library
+#
+# This library contains various small helper functions and classes.
+#
+project(libdsnutil)
+cmake_minimum_required(VERSION 2.8)
+
+#
+# This is required to load our custom .cmake files
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+include(CTest)
+enable_testing()
+set(BUILDNAME "${BUILDNAME}" "Name of build on CDash dashboard")
+
+#
+# Check for log4cpp framework
+find_package(Log4cpp)
+
+#
+# Prepare config.h
+configure_file(config.h.in config.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+#
+# Setup list of header files for system-wide installation
+set(libdsnutil_HEADERS netutil.h hexdump.hh)
+
+#
+# Setup list of sources for our library
+set(libdsnutil_SOURCES netutil.c hexdump.cc)
+if(LOG4CPP_FOUND)
+  # if we have log4cpp available we build an overloaded hexdump()
+  # that supports dumping to a log4cpp::CategoryStream
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} hexdump-log4cpp.cc)
+  include_directories(${LOG4CPP_INCLUDE_DIR})
+endif(LOG4CPP_FOUND)
+
+#
+# libdsnutil main build target
+add_library(dsnutil ${libdsnutil_SOURCES})
+
+#
+# Installation targets for libdsnutil static library and header files
+install(TARGETS dsnutil ARCHIVE DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION include/libdsnutil)
+install(FILES ${libdsnutil_HEADERS} DESTINATION include/libdsnutil)
+
+
+#
+# Tests for hexdump
+add_executable(test-hexdump test-hexdump.cc)
+target_link_libraries(test-hexdump dsnutil)
+if(LOG4CPP_FOUND)
+  target_link_libraries(test-hexdump ${LOG4CPP_LIBRARIES})
+endif(LOG4CPP_FOUND)
+add_test(test-hexdump test-hexdump "1")
+if(LOG4CPP_FOUND)
+  add_test(test-hexdump-log4cpp test-hexdump "2")
+endif(LOG4CPP_FOUND)
+
+
+#
+# Tests for netutil.[ch]
+add_executable(test-netutil test-netutil.cc)
+target_link_libraries(test-netutil dsnutil)
+if(LOG4CPP_FOUND)
+  target_link_libraries(test-netutil ${LOG4CPP_LIBRARIES})
+endif(LOG4CPP_FOUND)
+add_test(netutil-get_in_addr test-netutil "1")
+add_test(netutil-socketUDP test-netutil "2")
+
+#
+# Add 'doc' target to build if Doxygen is installed
+include(DocTarget)

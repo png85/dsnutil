@@ -1,0 +1,10 @@
+#ifndef CONFIG_H
+
+/** \brief log4cpp detection result
+ *
+ * This gets defined by CMake when the target system has an usable
+ * log4cpp implementation.
+ */
+#cmakedefine LOG4CPP_FOUND
+
+#endif

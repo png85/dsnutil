@@ -1,0 +1,10 @@
+libdsnutil README
+(c) 2012 #das-system Networks
+
+-- General info --
+this library contains various little utility/helper functions that have been
+used in other projects.
+
+-- Building --
+use CMake to configure and build as needed.
+
