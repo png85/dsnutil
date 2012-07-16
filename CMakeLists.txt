@@ -37,7 +37,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS netutil.h hexdump.hh)
+set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh)
 
 #
 # Setup list of sources for our library
