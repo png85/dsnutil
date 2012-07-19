@@ -31,6 +31,10 @@ endif(NOT DSNUTIL_SUBPROJECT)
 find_package(Log4cpp)
 
 #
+# Check for cppcheck and provide macros to run it on other build targets
+include(CppCheckTargets)
+
+#
 # Prepare config.h
 configure_file(config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -52,6 +56,9 @@ endif(LOG4CPP_FOUND)
 #
 # libdsnutil main build target
 add_library(dsnutil ${libdsnutil_SOURCES})
+if(CPPCHECK_FOUND)
+  add_cppcheck(dsnutil STYLE)
+endif(CPPCHECK_FOUND)
 
 #
 # Installation targets for libdsnutil static library and header files
