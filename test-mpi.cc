@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #include <mpi.h>
 
 #include "config.h"
