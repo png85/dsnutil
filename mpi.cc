@@ -151,19 +151,19 @@ bool DSN::MPI::isInitialized() {
 ///
 /// Returns the processor name (usually hostname) of the message passing
 /// node that runs this instance.
-std::string DSN::MPI::processorName() {
+std::string DSN::MPI::processorName() const {
   return m_processorName;
 }
 
 
 /// \brief Get message passing rank
-int DSN::MPI::rank() {
+int DSN::MPI::rank() const {
   return m_rank;
 }
 
 
 /// \brief Get message passing pool size
-int DSN::MPI::poolSize() {
+int DSN::MPI::poolSize() const {
   return m_poolSize;
 }
 
@@ -186,3 +186,4 @@ void DSN::MPI::copyLogSettings(log4cpp::Category& l) {
   // copy logging priority
   log.setPriority(l.getPriority());
 }
+

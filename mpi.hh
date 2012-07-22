@@ -30,11 +30,17 @@ namespace DSN {
     bool initialize(int& argc, char**& argv);
     bool isInitialized();
 
-    std::string processorName();
-    int rank();
-    int poolSize();
+    std::string processorName() const;
+    int rank() const;
+    int poolSize() const;
 
     void copyLogSettings(log4cpp::Category& l);
+
+    /// \brief Output basic operating info on an ostream
+    friend std::ostream& operator<<(std::ostream& o, const MPI& m) {
+      return o << "[MPI:" << m.rank() << "/" << m.poolSize() << "@"
+	       << m.processorName() << "]";
+    }
 
   private:
     log4cpp::Category& log;
