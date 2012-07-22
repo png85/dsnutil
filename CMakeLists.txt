@@ -54,6 +54,24 @@ if(LOG4CPP_FOUND)
 endif(LOG4CPP_FOUND)
 
 #
+# Check for MPI libraries and build utility classes if they're found
+find_package(MPI)
+if(MPI_FOUND AND LOG4CPP_FOUND)
+  # make sure mpicc/mpicxx get used instead of the regular compiler
+  set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
+  set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
+
+  # add sources/headers to main library target
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} mpi.cc)
+  set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
+
+  add_executable(test-mpi test-mpi.cc)
+  target_link_libraries(test-mpi dsnutil)
+  target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
+  add_test(test-mpi test-mpi)
+endif(MPI_FOUND AND LOG4CPP_FOUND)
+
+#
 # libdsnutil main build target
 add_library(dsnutil ${libdsnutil_SOURCES})
 if(CPPCHECK_FOUND)
