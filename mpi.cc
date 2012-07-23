@@ -50,18 +50,9 @@ DSN::MPI::~MPI() {
 /// \return true if the initialization was successful, otherwise false
 bool DSN::MPI::initialize(int& argc, char**& argv) {
   if (::MPI::Is_initialized()) {
-    // if MPI is already initialized we need to finalize and then
-    // re-initialize
-    try {
-      ::MPI::Finalize();
-    }
-
-    catch (::MPI::Exception& ex) {
-      log.errorStream() << "MPI::Finalize() failed with error code "
-			<< ex.Get_error_code() << ": "
-			<< ex.Get_error_string();
-      return false;
-    }
+    log.errorStream() << "Calling ::initialize(argc, argv) multiple times "
+		      << "violates MPI standards and isn't supported!";
+    return false;
   }
 
   try {

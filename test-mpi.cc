@@ -7,19 +7,7 @@
 #include "mpi.hh"
 
 int main(int argc, char** argv) {
-  DSN::MPI& mpi = DSN::MPI::getInstance();
-
-  if (!mpi.initialize(argc, argv)) {
-    std::cerr << "Unable to initialize MPI!" << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  std::cout << "MPI initialized successfully as job #"
-	    << mpi.rank() << "/" << mpi.poolSize() << " on "
-	    << mpi.processorName() << std::endl;
-
-  std::cout << "Testing shift operator to stdout: " << mpi << std::endl;
-
+  // initialize log4cpp logger to stdout
   log4cpp::Category& log = log4cpp::Category::getInstance("test-mpi");
   try {
     log4cpp::Appender* a = new log4cpp::OstreamAppender("test-mpi/stdout",
@@ -35,12 +23,29 @@ int main(int argc, char** argv) {
   }
 
   log.setPriority(log4cpp::Priority::DEBUG);
+  log.infoStream() << "Running tests for DSN::MPI class...";
+
+  // acquire reference to our MPI class
+  DSN::MPI& mpi = DSN::MPI::getInstance();
+
+  mpi.copyLogSettings(log);
+  log.debugStream() << "Successfully copied logging settings to MPI instance.";
+
+  if (!mpi.initialize(argc, argv)) {
+    log.errorStream() << "MPI::initialize(argc, argv) failed";
+    return EXIT_FAILURE;
+  }
+
+  log.infoStream() << "MPI initialized successfully as job #"
+		   << mpi.rank() << "/" << mpi.poolSize() << " on "
+		   << mpi.processorName();
 
   log.infoStream() << "Testing shift operator to log4cpp::CategoryStream: "
 		   << mpi;
 
-  mpi.copyLogSettings(log);
-  log.debugStream() << "Successfully copied logging settings to MPI instance.";
+  std::cout << "Testing shift operator to stdout: " << mpi << std::endl;
+
+  log.infoStream() << "All tests finished :-)";
 
   log4cpp::Category::shutdown();
 
