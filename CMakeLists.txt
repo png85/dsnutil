@@ -37,7 +37,7 @@ include(CppCheckTargets)
 #
 # Prepare config.h
 configure_file(config.h.in config.h)
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
@@ -62,7 +62,10 @@ if(MPI_FOUND AND LOG4CPP_FOUND)
   set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
 
   # add sources/headers to main library target
-  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} mpi.cc)
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} mpi/Job.cc
+  			 		       mpi/BSend.cc mpi/RSend.cc
+					       mpi/SSend.cc mpi/Send.cc
+					       mpi/ReceiveFunctor.cc)
   set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
 
   add_executable(test-mpi test-mpi.cc)

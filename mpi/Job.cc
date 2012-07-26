@@ -9,14 +9,14 @@
 #include <log4cpp/BasicLayout.hh>
 
 /// \brief Default constructor
-DSN::MPI::MPI() :
-  log(log4cpp::Category::getInstance("DSN::MPI")),
+DSN::MPI::Job::Job() :
+  log(log4cpp::Category::getInstance("DSN::MPI::Job")),
   m_processorName("unknown"), m_rank(-1), m_poolSize(-1) {
   // initialize bare minimum logger to stdout
   log.setPriority(log4cpp::Priority::DEBUG);
   try {
     log4cpp::Appender* logAppender =
-      new log4cpp::OstreamAppender("DSN::MPI/stdout", &std::cout);
+      new log4cpp::OstreamAppender("DSN::MPI::Job/stdout", &std::cout);
     logAppender->setLayout(new log4cpp::BasicLayout());
     log.addAppender(logAppender);
   }
@@ -32,7 +32,7 @@ DSN::MPI::MPI() :
 /// \brief Destructor
 ///
 /// Assures that message passing gets properly shut down on object destruction.
-DSN::MPI::~MPI() {
+DSN::MPI::Job::~Job() {
   if (::MPI::Is_initialized()) {
     ::MPI::Finalize();
   }
@@ -48,7 +48,7 @@ DSN::MPI::~MPI() {
 /// \param argv Reference to \a argv from main()
 ///
 /// \return true if the initialization was successful, otherwise false
-bool DSN::MPI::initialize(int& argc, char**& argv) {
+bool DSN::MPI::Job::initialize(int& argc, char**& argv) {
   if (::MPI::Is_initialized()) {
     log.errorStream() << "Calling ::initialize(argc, argv) multiple times "
 		      << "violates MPI standards and isn't supported!";
@@ -124,7 +124,7 @@ bool DSN::MPI::initialize(int& argc, char**& argv) {
 
 
 /// \brief Check if message passing initialized successfully
-bool DSN::MPI::isInitialized() {
+bool DSN::MPI::Job::isInitialized() {
   try {
     return ::MPI::Is_initialized();
   }
@@ -142,19 +142,19 @@ bool DSN::MPI::isInitialized() {
 ///
 /// Returns the processor name (usually hostname) of the message passing
 /// node that runs this instance.
-std::string DSN::MPI::processorName() const {
+std::string DSN::MPI::Job::processorName() const {
   return m_processorName;
 }
 
 
 /// \brief Get message passing rank
-int DSN::MPI::rank() const {
+int DSN::MPI::Job::rank() const {
   return m_rank;
 }
 
 
 /// \brief Get message passing pool size
-int DSN::MPI::poolSize() const {
+int DSN::MPI::Job::poolSize() const {
   return m_poolSize;
 }
 
@@ -163,7 +163,7 @@ int DSN::MPI::poolSize() const {
 ///
 /// This copies all appenders and the logging priority from the given
 /// log4cpp::Category instance but leaves object ownership as it is.
-void DSN::MPI::copyLogSettings(log4cpp::Category& l) {
+void DSN::MPI::Job::copyLogSettings(log4cpp::Category& l) {
   // copy all log appenders but leave ownership with the source
   // category
   log4cpp::AppenderSet logAppenders = l.getAllAppenders();
@@ -178,3 +178,7 @@ void DSN::MPI::copyLogSettings(log4cpp::Category& l) {
   log.setPriority(l.getPriority());
 }
 
+
+const ::MPI::Intracomm& DSN::MPI::Job::world() const {
+  return ::MPI::COMM_WORLD;
+}

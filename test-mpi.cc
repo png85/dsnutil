@@ -23,10 +23,10 @@ int main(int argc, char** argv) {
   }
 
   log.setPriority(log4cpp::Priority::DEBUG);
-  log.infoStream() << "Running tests for DSN::MPI class...";
+  log.infoStream() << "Running tests for DSN::MPI::Job class...";
 
   // acquire reference to our MPI class
-  DSN::MPI& mpi = DSN::MPI::getInstance();
+  DSN::MPI::Job& mpi = DSN::MPI::Job::getInstance();
 
   mpi.copyLogSettings(log);
   log.debugStream() << "Successfully copied logging settings to MPI instance.";
