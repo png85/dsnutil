@@ -44,6 +44,11 @@ void BSend::operator()(const void* data, int count,
 	      << "while trying to Bsend() data: "
 	      << ex.Get_error_string() << " (error code: "
 	      << ex.Get_error_code() << ")" << std::endl;
+
+    // try to clean up buffer memory before rethrowing exception
+    ::MPI::Detach_buffer(pBuffer);
+    delete[] buf;
+
     throw(ex); // FIXME(png): this sux! 
   }
   ::MPI::Detach_buffer(pBuffer);
