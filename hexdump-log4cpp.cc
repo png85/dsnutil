@@ -1,14 +1,9 @@
-/// $Id$
-///
-/// (c) 2011 DAS-SYSTEM Networks
-///
-/// \file
-/// \brief Hexdump utility function
-///
-/// This file contains a function to hex-dump a given memory area.
-///
-/// \author Peter Hille <peter@das-system-networks.de>
-///
+/** \file
+ *
+ * \brief Implementation of hexdump() for log4cpp
+ *
+ * \author Peter Hille (png!das-system) <peter@das-system-networks.de>
+ */
 
 #include <cctype>
 #include <cstdio>
@@ -18,15 +13,16 @@
 #include "config.h"
 #include "hexdump.hh"
 
-/// \brief Log hex dump of a memory area.
-///
-/// This pretty-prints a hex dump of the given memory area and size to a
-/// log4cpp::CategoryStream. The output of this is roughly similar to 
-/// 'hexdump -C file' on UNIX systems.
-///
-/// \param mem Pointer to memory area to be dumped
-/// \param length Number of bytes to dump from mem
-/// \param out log stream to which the hexdump gets written
+/** \brief Print hex dump of a memory area
+ *
+ * This function pretty-prints a hex-dump of the memory area pointed to by
+ * \a mem to a log4cpp::CategoryStream.
+ * The output is roughly similar to 'hexdump -C' on UNIX systems.
+ *
+ * \param mem Pointer to the memory area to be dumped
+ * \param length Number of bytes to dump
+ * \param out Output stream to which the hexdump shall be written
+ */
 void hexdump(const void* mem, size_t length, log4cpp::CategoryStream out) {
   char line[80];
   const char* src = static_cast<const char*>(mem);
