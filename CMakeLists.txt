@@ -41,11 +41,11 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh)
+set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh csv.hh)
 
 #
 # Setup list of sources for our library
-set(libdsnutil_SOURCES netutil.c hexdump.cc)
+set(libdsnutil_SOURCES netutil.c hexdump.cc csv/Row.cc csv/Iterator.cc)
 if(LOG4CPP_FOUND)
   # if we have log4cpp available we build an overloaded hexdump()
   # that supports dumping to a log4cpp::CategoryStream
