@@ -51,6 +51,10 @@ add_executable(test-csv.Row csv/test-Row.cc)
 target_link_libraries(test-csv.Row dsnutil)
 add_test(csv.Row test-csv.Row "${CMAKE_SOURCE_DIR}/csv/test.csv")
 
+add_executable(test-csv.Iterator csv/test-Iterator.cc)
+target_link_libraries(test-csv.Iterator dsnutil)
+add_test(csv.Iterator test-csv.Iterator "${CMAKE_SOURCE_DIR}/csv/test.csv")
+
 if(LOG4CPP_FOUND)
   # if we have log4cpp available we build an overloaded hexdump()
   # that supports dumping to a log4cpp::CategoryStream
