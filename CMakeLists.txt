@@ -39,6 +39,10 @@ include(CppCheckTargets)
 configure_file(config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
+if(LOG4CPP_FOUND)
+  include_directories(${LOG4CPP_INCLUDE_DIR})
+endif(LOG4CPP_FOUND)
+
 #
 # Setup list of header files for system-wide installation
 set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh csv.hh)
@@ -47,6 +51,8 @@ set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh csv.hh)
 # Setup list of sources for our library
 set(libdsnutil_SOURCES netutil.c hexdump.cc csv/Row.cc csv/Iterator.cc)
 
+#
+# Tests for CSV parser classes
 add_executable(test-csv.Row csv/test-Row.cc)
 target_link_libraries(test-csv.Row dsnutil)
 add_test(csv.Row test-csv.Row "${CMAKE_SOURCE_DIR}/csv/test.csv")
@@ -54,13 +60,6 @@ add_test(csv.Row test-csv.Row "${CMAKE_SOURCE_DIR}/csv/test.csv")
 add_executable(test-csv.Iterator csv/test-Iterator.cc)
 target_link_libraries(test-csv.Iterator dsnutil)
 add_test(csv.Iterator test-csv.Iterator "${CMAKE_SOURCE_DIR}/csv/test.csv")
-
-if(LOG4CPP_FOUND)
-  # if we have log4cpp available we build an overloaded hexdump()
-  # that supports dumping to a log4cpp::CategoryStream
-  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} hexdump-log4cpp.cc)
-  include_directories(${LOG4CPP_INCLUDE_DIR})
-endif(LOG4CPP_FOUND)
 
 #
 # Check for MPI libraries and build utility classes if they're found
@@ -104,9 +103,9 @@ target_link_libraries(test-hexdump dsnutil)
 if(LOG4CPP_FOUND)
   target_link_libraries(test-hexdump ${LOG4CPP_LIBRARIES})
 endif(LOG4CPP_FOUND)
-add_test(test-hexdump test-hexdump "1")
+add_test(hexdump.ostream test-hexdump "1")
 if(LOG4CPP_FOUND)
-  add_test(test-hexdump-log4cpp test-hexdump "2")
+  add_test(hexdump.log4cpp test-hexdump "2")
 endif(LOG4CPP_FOUND)
 
 
