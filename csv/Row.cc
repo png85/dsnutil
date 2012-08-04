@@ -71,7 +71,7 @@ void Row::readNext(std::istream& s) {
  *
  * \return str after reading one line of CSV data from it
  */
-std::istream& operator >>(std::istream& str, Row& data) {
+std::istream& DSN::CSV::operator >>(std::istream& str, Row& data) {
   data.readNext(str);
   return str;
 }
