@@ -46,6 +46,11 @@ set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh csv.hh)
 #
 # Setup list of sources for our library
 set(libdsnutil_SOURCES netutil.c hexdump.cc csv/Row.cc csv/Iterator.cc)
+
+add_executable(test-csv.Row csv/test-Row.cc)
+target_link_libraries(test-csv.Row dsnutil)
+add_test(csv.Row test-csv.Row "${CMAKE_SOURCE_DIR}/csv/test.csv")
+
 if(LOG4CPP_FOUND)
   # if we have log4cpp available we build an overloaded hexdump()
   # that supports dumping to a log4cpp::CategoryStream
