@@ -1,3 +1,10 @@
+/** \file
+ *
+ * \brief Implementation of DSN::CSV::Row
+ *
+ * This file implements a class to parse a single row of CSV data from an
+ * input stream.
+ */
 #include <stdexcept>
 #include <sstream>
 

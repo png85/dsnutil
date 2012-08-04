@@ -1,3 +1,10 @@
+/** \file
+ *
+ * \brief Prototypes for CSV parser classes
+ *
+ * This file contains the prototypes for all classes related to parsing CSV
+ * files.
+ */
 #ifndef DSNUTIL_CSV_HH
 #define DSNUTIL_CSV_HH 1
 

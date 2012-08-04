@@ -1,3 +1,10 @@
+/** \file
+ *
+ * \brief Implementation of DSN::CSV::Iterator
+ *
+ * This file implements an iterator-based interface to parse CSV data from
+ * arbitrary input streams.
+ */
 #include "csv.hh"
 
 using namespace DSN::CSV;
