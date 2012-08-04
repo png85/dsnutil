@@ -1,7 +1,16 @@
 /** \file
- * \brief Prototype for DSN::MPI class
+ *
+ * \brief Prototypes for DSN::MPI related classes
+ *
+ * This file implements the prototypes and templates within the DSN::MPI
+ * namespace which contains utility classes and templates to speed up the
+ * development of applications utilizing the message passing interface.
  *
  * \author Peter Hille (png!das-system) <peter@das-system-networks.de>
+ *
+ * \version 1.1 Added functor-based p2p communication
+ *
+ * \version 1.0 Initial release
  */
 #ifndef DSNUTIL_MPI_HH
 #define DSNUTIL_MPI_HH

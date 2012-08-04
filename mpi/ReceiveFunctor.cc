@@ -1,3 +1,14 @@
+/** \file
+ *
+ * \brief Implementation of DSN::MPI::ReceiveFunctor
+ *
+ * This file implements the DSN::MPI::ReceiveFunctor class which is a general
+ * functor to receive p2p communication data in a message passing environment.
+ *
+ * \author Peter Hille (png!das-system) <peter@das-system-networks.de>
+ *
+ * \version 1.0 Initial release
+ */
 #include "mpi.hh"
 
 using namespace DSN::MPI;

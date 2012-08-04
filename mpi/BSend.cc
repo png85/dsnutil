@@ -1,3 +1,14 @@
+/** \file
+ *
+ * \brief Implementation of DSN::MPI::BSend
+ *
+ * This file implements the DSN::MPI::BSend functor for point-to-point
+ * communication in a message passing environment.
+ *
+ * \author Peter Hille (png!das-system)
+ *
+ * \version 1.0 Initial release
+ */
 #include <assert.h>
 
 #include "mpi.hh"

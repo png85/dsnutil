@@ -1,3 +1,14 @@
+/** \file
+ *
+ * \brief Implementation of DSN::MPI::RSend
+ *
+ * This file implements the DSN::MPI::RSend functor for point-to-point
+ * communication in a message passing environment.
+ *
+ * \author Peter Hille (png!das-system)
+ *
+ * \version 1.0 Initial release
+ */
 #include "mpi.hh"
 
 using namespace DSN::MPI;

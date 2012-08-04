@@ -1,3 +1,15 @@
+/** \file
+ *
+ * \brief Implementation of DSN::MPI::Job
+ *
+ * This file implements the DSN::MPI::Job class which provides the application
+ * with general information about the job it represents in a message passing
+ * environment.
+ *
+ * \author Peter Hille (png!das-system) <peter@das-system-networks.de>
+ *
+ * \version 1.0 Initial release
+ */
 #include <iostream>
 #include <cstdlib>
 #include <mpi.h>
