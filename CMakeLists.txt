@@ -49,17 +49,21 @@ set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh csv.hh)
 
 #
 # Setup list of sources for our library
-set(libdsnutil_SOURCES netutil.c hexdump.cc csv/Row.cc csv/Iterator.cc)
+set(libdsnutil_SOURCES netutil.c
+		       hexdump.cc
+		       csv/Row.cc csv/Iterator.cc)
 
 #
 # Tests for CSV parser classes
 add_executable(test-csv.Row csv/test-Row.cc)
 target_link_libraries(test-csv.Row dsnutil)
-add_test(csv.Row test-csv.Row "${CMAKE_SOURCE_DIR}/csv/test.csv")
+add_test(csv.Row test-csv.Row
+		 "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
 
 add_executable(test-csv.Iterator csv/test-Iterator.cc)
 target_link_libraries(test-csv.Iterator dsnutil)
-add_test(csv.Iterator test-csv.Iterator "${CMAKE_SOURCE_DIR}/csv/test.csv")
+add_test(csv.Iterator test-csv.Iterator
+		      "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
 
 #
 # Check for MPI libraries and build utility classes if they're found
