@@ -7,6 +7,10 @@
  * \brief Prototypes for network utility code.
  *
  * \author Peter Hille <peter@das-system-networks.de>
+ *
+ * \version 1.0 Initial release
+ *
+ * \todo This might need to be ported to windows/winsock in the future.
  */
 #ifndef NETUTIL_H
 #define NETUTIL_H 1

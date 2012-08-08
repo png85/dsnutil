@@ -45,13 +45,16 @@ endif(LOG4CPP_FOUND)
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS netutil.h hexdump.hh Singleton.hh csv.hh)
+set(libdsnutil_HEADERS hexdump.hh Singleton.hh csv.hh)
 
 #
 # Setup list of sources for our library
-set(libdsnutil_SOURCES netutil.c
-		       hexdump.cc
+set(libdsnutil_SOURCES hexdump.cc
 		       csv/Row.cc csv/Iterator.cc)
+if(NOT WIN32)
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} netutil.c)
+  set(libdsnutil_HEADERS ${libdsnutil_HEADERS} netutil.h)
+endif(NOT WIN32)
 
 #
 # Tests for CSV parser classes
@@ -115,13 +118,15 @@ endif(LOG4CPP_FOUND)
 
 #
 # Tests for netutil.[ch]
-add_executable(test-netutil test-netutil.cc)
-target_link_libraries(test-netutil dsnutil)
-if(LOG4CPP_FOUND)
-  target_link_libraries(test-netutil ${LOG4CPP_LIBRARIES})
-endif(LOG4CPP_FOUND)
-add_test(netutil-get_in_addr test-netutil "1")
-add_test(netutil-socketUDP test-netutil "2")
+if(NOT WIN32)
+  add_executable(test-netutil test-netutil.cc)
+  target_link_libraries(test-netutil dsnutil)
+  if(LOG4CPP_FOUND)
+    target_link_libraries(test-netutil ${LOG4CPP_LIBRARIES})
+    endif(LOG4CPP_FOUND)
+  add_test(netutil-get_in_addr test-netutil "1")
+  add_test(netutil-socketUDP test-netutil "2")
+endif(NOT WIN32)
 
 #
 # Add 'doc' target to build if Doxygen is installed
