@@ -89,6 +89,15 @@ if(MPI_FOUND AND LOG4CPP_FOUND)
   add_test(test-mpi test-mpi)
 endif(MPI_FOUND AND LOG4CPP_FOUND)
 
+if(LOG4CPP_FOUND)
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} intercept_stream.cc)
+  set(libdsnutil_HEADERS ${libdsnutil_HEADERS} intercept_stream.hh)
+  add_executable(test-intercept_stream test-intercept_stream.cc)
+  target_link_libraries(test-intercept_stream dsnutil)
+  target_link_libraries(test-intercept_stream ${LOG4CPP_LIBRARIES})
+  add_test(intercept_stream test-intercept_stream)
+endif(LOG4CPP_FOUND)
+
 #
 # libdsnutil main build target
 add_library(dsnutil ${libdsnutil_SOURCES})
