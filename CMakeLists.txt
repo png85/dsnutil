@@ -58,15 +58,17 @@ endif(NOT WIN32)
 
 #
 # Tests for CSV parser classes
-add_executable(test-csv.Row csv/test-Row.cc)
-target_link_libraries(test-csv.Row dsnutil)
-add_test(csv.Row test-csv.Row
-		 "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
+if(BUILD_TESTING)
+  add_executable(test-csv.Row csv/test-Row.cc)
+  target_link_libraries(test-csv.Row dsnutil)
+  add_test(csv.Row test-csv.Row
+    "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
 
-add_executable(test-csv.Iterator csv/test-Iterator.cc)
-target_link_libraries(test-csv.Iterator dsnutil)
-add_test(csv.Iterator test-csv.Iterator
-		      "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
+  add_executable(test-csv.Iterator csv/test-Iterator.cc)
+  target_link_libraries(test-csv.Iterator dsnutil)
+  add_test(csv.Iterator test-csv.Iterator
+    "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
+endif(BUILD_TESTING)
 
 #
 # Check for MPI libraries and build utility classes if they're found
@@ -83,19 +85,23 @@ if(MPI_FOUND AND LOG4CPP_FOUND)
 					       mpi/ReceiveFunctor.cc)
   set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
 
-  add_executable(test-mpi test-mpi.cc)
-  target_link_libraries(test-mpi dsnutil)
-  target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
-  add_test(test-mpi test-mpi)
+  if(BUILD_TESTING)
+    add_executable(test-mpi test-mpi.cc)
+    target_link_libraries(test-mpi dsnutil)
+    target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
+    add_test(test-mpi test-mpi)
+  endif(BUILD_TESTING)
 endif(MPI_FOUND AND LOG4CPP_FOUND)
 
 if(LOG4CPP_FOUND)
   set(libdsnutil_SOURCES ${libdsnutil_SOURCES} intercept_stream.cc)
   set(libdsnutil_HEADERS ${libdsnutil_HEADERS} intercept_stream.hh)
-  add_executable(test-intercept_stream test-intercept_stream.cc)
-  target_link_libraries(test-intercept_stream dsnutil)
-  target_link_libraries(test-intercept_stream ${LOG4CPP_LIBRARIES})
-  add_test(intercept_stream test-intercept_stream)
+  if(BUILD_TESTING)
+    add_executable(test-intercept_stream test-intercept_stream.cc)
+    target_link_libraries(test-intercept_stream dsnutil)
+    target_link_libraries(test-intercept_stream ${LOG4CPP_LIBRARIES})
+    add_test(intercept_stream test-intercept_stream)
+  endif(BUILD_TESTING)
 endif(LOG4CPP_FOUND)
 
 #
@@ -114,28 +120,30 @@ install(FILES ${libdsnutil_HEADERS} DESTINATION include/libdsnutil)
 
 #
 # Tests for hexdump
-add_executable(test-hexdump test-hexdump.cc)
-target_link_libraries(test-hexdump dsnutil)
-if(LOG4CPP_FOUND)
-  target_link_libraries(test-hexdump ${LOG4CPP_LIBRARIES})
-endif(LOG4CPP_FOUND)
-add_test(hexdump.ostream test-hexdump "1")
-if(LOG4CPP_FOUND)
-  add_test(hexdump.log4cpp test-hexdump "2")
-endif(LOG4CPP_FOUND)
-
-
-#
-# Tests for netutil.[ch]
-if(NOT WIN32)
-  add_executable(test-netutil test-netutil.cc)
-  target_link_libraries(test-netutil dsnutil)
+if(BUILD_TESTING)
+  add_executable(test-hexdump test-hexdump.cc)
+  target_link_libraries(test-hexdump dsnutil)
   if(LOG4CPP_FOUND)
-    target_link_libraries(test-netutil ${LOG4CPP_LIBRARIES})
+    target_link_libraries(test-hexdump ${LOG4CPP_LIBRARIES})
+  endif(LOG4CPP_FOUND)
+  add_test(hexdump.ostream test-hexdump "1")
+  if(LOG4CPP_FOUND)
+    add_test(hexdump.log4cpp test-hexdump "2")
+  endif(LOG4CPP_FOUND)
+
+
+  #
+  # Tests for netutil.[ch]
+  if(NOT WIN32)
+    add_executable(test-netutil test-netutil.cc)
+    target_link_libraries(test-netutil dsnutil)
+    if(LOG4CPP_FOUND)
+      target_link_libraries(test-netutil ${LOG4CPP_LIBRARIES})
     endif(LOG4CPP_FOUND)
-  add_test(netutil-get_in_addr test-netutil "1")
-  add_test(netutil-socketUDP test-netutil "2")
-endif(NOT WIN32)
+    add_test(netutil-get_in_addr test-netutil "1")
+    add_test(netutil-socketUDP test-netutil "2")
+  endif(NOT WIN32)
+endif(BUILD_TESTING)
 
 #
 # Add 'doc' target to build if Doxygen is installed
