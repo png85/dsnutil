@@ -42,7 +42,9 @@ endif(WANT_LOG4CPP)
 
 #
 # Check for cppcheck and provide macros to run it on other build targets
-include(CppCheckTargets)
+if(BUILD_TESTING)
+  include(CppCheckTargets)
+endif(BUILD_TESTING)
 
 #
 # Prepare config.h
