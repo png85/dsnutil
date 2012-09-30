@@ -86,7 +86,7 @@ endif(BUILD_TESTING AND WANT_CSV)
 # Check for MPI libraries and build utility classes if they're found
 if(WANT_MPI)
 find_package(MPI)
-  if(MPI_FOUND AND LOG4CPP_FOUND)
+  if(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
     # make sure mpicc/mpicxx get used instead of the regular compiler
     set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
     set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
@@ -98,15 +98,17 @@ find_package(MPI)
 					       	 mpi/ReceiveFunctor.cc)
     set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
 
-    if(BUILD_TESTING)
+    if(BUILD_TESTING AND WANT_LOG4CPP)
       add_executable(test-mpi test-mpi.cc)
       target_link_libraries(test-mpi dsnutil)
       target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
       add_test(test-mpi test-mpi)
-    endif(BUILD_TESTING)
-  endif(MPI_FOUND AND LOG4CPP_FOUND)
+    endif(BUILD_TESTING AND WANT_LOG4CPP)
+  endif(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
 endif(WANT_MPI)
 
+#
+# intercept_stream class to redirect std::ifstream through log4cpp
 if(WANT_LOG4CPP AND LOG4CPP_FOUND)
   set(libdsnutil_SOURCES ${libdsnutil_SOURCES} intercept_stream.cc)
   set(libdsnutil_HEADERS ${libdsnutil_HEADERS} intercept_stream.hh)
