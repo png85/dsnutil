@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-#include "assert.hpp"
+#include "assert.hh"
 
 int main(int argc, char** argv) {
   std::cout << "assert.hpp throwing assert() test" << std::endl;

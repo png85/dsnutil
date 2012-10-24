@@ -54,7 +54,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hpp)
+set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh)
 
 
 #
@@ -150,9 +150,9 @@ if(BUILD_TESTING)
   endif(LOG4CPP_FOUND AND WANT_LOG4CPP)
 
   #
-  # Test for throwing assert(3) from assert.hpp
-  add_executable(test-assert test-assert.cpp)
-  add_test(assert.hpp test-assert)
+  # Test for throwing assert(3) from assert.hh
+  add_executable(test-assert test-assert.cc)
+  add_test(assert.hh test-assert)
 
 
   #
