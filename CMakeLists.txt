@@ -22,7 +22,7 @@ if(NOT DSNUTIL_SUBPROJECT)
   set(CPACK_PACKAGE_DESCRIPTION "#das-system Networks util library")
   set(CPACK_PACKAGE_VERSION_MAJOR "0")
   set(CPACK_PACKAGE_VERSION_MINOR "99")
-  set(CPACK_PACKAGE_VERSION_PATCH "5")
+  set(CPACK_PACKAGE_VERSION_PATCH "6")
   include(CPack)
 endif(NOT DSNUTIL_SUBPROJECT)
 
@@ -54,7 +54,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS hexdump.hh Singleton.hh)
+set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hpp)
 
 
 #
@@ -136,9 +136,9 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION include/libdsnuti
 install(FILES ${libdsnutil_HEADERS} DESTINATION include/libdsnutil)
 
 
-#
-# Tests for hexdump
 if(BUILD_TESTING)
+  #
+  # Tests for hexdump
   add_executable(test-hexdump test-hexdump.cc)
   target_link_libraries(test-hexdump dsnutil)
   if(LOG4CPP_FOUND AND WANT_LOG4CPP)
@@ -148,6 +148,11 @@ if(BUILD_TESTING)
   if(LOG4CPP_FOUND AND WANT_LOG4CPP)
     add_test(hexdump.log4cpp test-hexdump "2")
   endif(LOG4CPP_FOUND AND WANT_LOG4CPP)
+
+  #
+  # Test for throwing assert(3) from assert.hpp
+  add_executable(test-assert test-assert.cpp)
+  add_test(assert.hpp test-assert)
 
 
   #
