@@ -39,7 +39,8 @@ inline void throwing_assert(bool test, const std::string& msg) {
     throw std::logic_error(msg);
 }
 
-#  if (__GNUC__ == 2 && __GNUC_MINOR__ >= 6) || __GNUC__ > 2
+#  if (__GNUC__ == 2 && __GNUC_MINOR__ >= 6) || __GNUC__ > 2 || \
+  defined(__clang__)
 /** \brief Throwing assert(3) definition
  */
 #    define assert3(test, file, line)					\
