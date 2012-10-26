@@ -93,19 +93,17 @@ find_package(MPI)
     set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
     set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
 
-    # add sources/headers to main library target
-    set(libdsnutil_SOURCES ${libdsnutil_SOURCES} mpi/Job.cc
-  			 		       	 mpi/BSend.cc mpi/RSend.cc
-					       	 mpi/SSend.cc mpi/Send.cc
-					       	 mpi/ReceiveFunctor.cc)
+    add_library(dsnutil-mpi mpi/Job.cc mpi/BSend.cc mpi/RSend.cc mpi/SSend.cc mpi/Send.cc mpi/ReceiveFunctor.cc)
     set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
 
     if(BUILD_TESTING AND WANT_LOG4CPP)
       add_executable(test-mpi test-mpi.cc)
-      target_link_libraries(test-mpi dsnutil)
+      target_link_libraries(test-mpi dsnutil dsnutil-mpi)
       target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
       add_test(test-mpi test-mpi)
     endif(BUILD_TESTING AND WANT_LOG4CPP)
+
+    install(TARGETS dsnutil-mpi ARCHIVE DESTINATION lib)
   endif(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
 endif(WANT_MPI)
 
