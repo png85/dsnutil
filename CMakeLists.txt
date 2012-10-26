@@ -66,8 +66,8 @@ if(WANT_CSV)
 endif(WANT_CSV)
 
 if(NOT WIN32)
-  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} netutil.c)
-  set(libdsnutil_HEADERS ${libdsnutil_HEADERS} netutil.h)
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} netutil.c tcp_buf.cc tcp_stream.cc)
+  set(libdsnutil_HEADERS ${libdsnutil_HEADERS} netutil.h tcp_buf.hh tcp_stream.cc)
 endif(NOT WIN32)
 
 #
@@ -165,6 +165,11 @@ if(BUILD_TESTING)
     endif(LOG4CPP_FOUND AND WANT_LOG4CPP)
     add_test(netutil-get_in_addr test-netutil "1")
     add_test(netutil-socketUDP test-netutil "2")
+
+    add_executable(test-tcp_stream test-tcp_stream.cc)
+    target_link_libraries(test-tcp_stream dsnutil)
+    add_test(tcp_stream test-tcp_stream)
+
   endif(NOT WIN32)
 endif(BUILD_TESTING)
 
