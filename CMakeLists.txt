@@ -61,8 +61,11 @@ set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh)
 # Setup list of sources for our library
 set(libdsnutil_SOURCES hexdump.cc)
 if(WANT_CSV)
-  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} csv/Row.cc csv/Iterator.cc)
+  set(CSV_SOURCES csv/Row.cc csv/Iterator.cc)
+  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} ${CSV_SOURCES})
   set(libdsnutil_HEADERS ${libdsnutil_HEADERS} csv.hh)
+  add_library(dsnutil-csv ${CSV_SOURCES})
+  install(TARGETS dsnutil-csv ARCHIVE DESTINATION lib)
 endif(WANT_CSV)
 
 if(NOT WIN32)
@@ -74,12 +77,12 @@ endif(NOT WIN32)
 # Tests for CSV parser classes
 if(BUILD_TESTING AND WANT_CSV)
   add_executable(test-csv.Row csv/test-Row.cc)
-  target_link_libraries(test-csv.Row dsnutil)
+  target_link_libraries(test-csv.Row dsnutil-csv)
   add_test(csv.Row test-csv.Row
     "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
 
   add_executable(test-csv.Iterator csv/test-Iterator.cc)
-  target_link_libraries(test-csv.Iterator dsnutil)
+  target_link_libraries(test-csv.Iterator dsnutil-csv)
   add_test(csv.Iterator test-csv.Iterator
     "${CMAKE_CURRENT_SOURCE_DIR}/csv/test.csv")
 endif(BUILD_TESTING AND WANT_CSV)
