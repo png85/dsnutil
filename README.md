@@ -7,20 +7,11 @@ used in other projects.
 
 
 # Optional dependencies
- * MPI implementation
- * log4cpp logging library
+* MPI implementation
+* log4cpp logging library
 
 
 # Contents
-## Overview
-csv/             - Simple CSV parser interface
-mpi/             - Message Passing Interface utility classes
-assert           - Implementation of assert(3) that throws an exception
-intercept_stream - Intercept std::ostreams and re-route them through log4cpp
-hexdump          - Write hex dumps of memory areas
-Singleton        - Template to create singleton classes
-
-## Libraries
 + libdsnutil-mpi - Utility classes for applications using the Message Passing Interface
 + libdsnutil-csv - CSV Parser classes
 + libdsnutil     - Various utility classes/functions that didn't fit into the above
@@ -35,4 +26,6 @@ Use CMake to configure and build as needed. Useful options might be:
 
 + BUILD_TESTING - Build tests for all components
 
+## API documentation
+The CMake-based build will automatically detect Doxygen if its installed and add a target to the build which can be used to generate API documentation in HTML format.
 
