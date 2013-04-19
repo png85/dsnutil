@@ -1,31 +1,31 @@
-libdsnutil README
-(c) 2012 #das-system Networks
+# libdsnutil README
+(c) 2012-2013 #das-system Networks
 
-# General info
+## General info
 this library contains various little utility/helper functions that have been
 used in other projects.
 
 
-# Optional dependencies
+## Optional dependencies
 * MPI implementation
 * log4cpp logging library
 
 
-# Contents
-+ libdsnutil-mpi - Utility classes for applications using the Message Passing Interface
-+ libdsnutil-csv - CSV Parser classes
-+ libdsnutil     - Various utility classes/functions that didn't fit into the above
+## Contents
+* libdsnutil-mpi - Utility classes for applications using the Message Passing Interface
+* libdsnutil-csv - CSV Parser classes
+* libdsnutil     - Various utility classes/functions that didn't fit into the above
 
 
-# Building
+## Building [![Build Status](https://travis-ci.org/png85/dsnutil.png?branch=master)](https://travis-ci.org/png85/dsnutil)
 Use CMake to configure and build as needed. Useful options might be:
 
-+ WANT_MPI      - Compile MPI utility classes
-+ WANT_CSV      - Compile CSV parser
-+ WANT_LOG4CPP  - Enable log4cpp support
+* WANT_MPI      - Compile MPI utility classes
+* WANT_CSV      - Compile CSV parser
+* WANT_LOG4CPP  - Enable log4cpp support
 
-+ BUILD_TESTING - Build tests for all components
+* BUILD_TESTING - Build tests for all components
 
-## API documentation
+### API documentation
 The CMake-based build will automatically detect Doxygen if its installed and add a target to the build which can be used to generate API documentation in HTML format.
 
