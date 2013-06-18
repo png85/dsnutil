@@ -54,7 +54,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh)
+set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh LoggingBase.h)
 
 
 #
