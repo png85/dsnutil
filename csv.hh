@@ -90,7 +90,7 @@ namespace DSN {
        */
       Row m_row;
     };
-  };
-};
+  }
+}
 
 #endif // !DSNUTIL_CSVROW_HH

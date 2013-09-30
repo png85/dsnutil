@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
   for (DSN::CSV::Iterator i(file); i!=DSN::CSV::Iterator(); ++i) {
     DSN::CSV::Row row = (*i);
     std::cout << "Read row of size " << row.size() << " cells:" << std::endl;
-    for (int j=0; j<row.size(); j++) {
+    for (size_t j=0; j<row.size(); j++) {
       std::cout << "row[" << j << "] = '" << row[j] << "'" << std::endl;
     }
   }
