@@ -10,6 +10,27 @@ cmake_minimum_required(VERSION 2.8)
 # This is required to load our custom .cmake files
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+include(CheckCXX11Features)
+foreach(flag ${CXX11_FEATURE_LIST})
+  message(STATUS "Enabling C++11 feature: ${flag}")
+  add_definitions(-D ${flag})
+endforeach()
+
+#
+# Enable more verbose warnings for GCC
+if(CMAKE_COMPILER_IS_GNUCXX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -std=c++0x")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -ggdb")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
+#
+# Enable more verbose warnings for Clang
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  message(STATUS "Enabling Clang specific compiler options...")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -ggdb")
+endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+
 #
 # CTest/CDash configuration; see CTestConfig.cmake for more info!
 include(CTest)
