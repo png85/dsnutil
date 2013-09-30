@@ -75,7 +75,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh LoggingBase.h)
+set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh LoggingBase.h map.hh)
 
 
 #
@@ -176,6 +176,10 @@ if(BUILD_TESTING)
   add_executable(test-assert test-assert.cc)
   add_test(assert.hh test-assert)
 
+  if(HAS_CXX11_LAMBDA)
+    add_executable(test-map test-map.cc)
+    add_test(map.hh test-map)
+  endif(HAS_CXX11_LAMBDA)
 
   #
   # Tests for netutil.[ch]
