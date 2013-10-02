@@ -181,6 +181,9 @@ if(BUILD_TESTING)
     add_test(map.hh test-map)
   endif(HAS_CXX11_LAMBDA)
 
+  add_executable(test-pretty_print test-pretty_print.cc)
+  add_test(pretty_print.hh test-pretty_print)
+
   #
   # Tests for netutil.[ch]
   if(NOT WIN32)
