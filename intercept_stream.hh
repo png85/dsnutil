@@ -12,17 +12,17 @@
 #include <log4cpp/Priority.hh>
 
 namespace DSN {
-  /** \brief Interceptor for std::ostream instances
-   *
-   * This class can be used to intercept all writes to an std::ostream instance
-   * and re-route them through log4cpp.
-   *
-   * \version 1.0
-   *
-   * \author Peter Hille (png!das-system) <peter@das-system-networks.de>
-   */
-  class intercept_stream : public std::streambuf {
-  public:
+/** \brief Interceptor for std::ostream instances
+ *
+ * This class can be used to intercept all writes to an std::ostream instance
+ * and re-route them through log4cpp.
+ *
+ * \version 1.0
+ *
+ * \author Peter Hille (png!das-system) <peter@das-system-networks.de>
+ */
+class intercept_stream : public std::streambuf {
+public:
     /** \brief Default constructor
      *
      * \param stream std::ostream instance to intercept
@@ -31,15 +31,15 @@ namespace DSN {
      * \param streamName Name of the intercepted stream in human readable form
      */
     intercept_stream(std::ostream& stream, log4cpp::Priority::Value priority,
-		     log4cpp::Category& log, const char* streamName=0);
+                     log4cpp::Category& log, const char* streamName=0);
     ~intercept_stream();
 
-  protected:
+protected:
     virtual std::streamsize xsputn(const char* msg, std::streamsize count);
     virtual std::streambuf::int_type overflow(std::streambuf::int_type c);
     virtual int sync();
 
-  private:
+private:
     /// \brief Buffer of intercepted stream
     std::streambuf* m_orgbuf;
 
@@ -54,7 +54,7 @@ namespace DSN {
 
     log4cpp::Category& m_log;
     log4cpp::Priority::Value m_priority;
-  };
 };
+}
 
 #endif // !INTERCEPT_STREAM_HH

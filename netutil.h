@@ -22,12 +22,12 @@
 extern "C" {
 #endif
 
-  void* get_in_addr(struct sockaddr* sa);
+void* get_in_addr(struct sockaddr* sa);
 
-  int socketUDP(const char* targetHost, int targetPort, struct addrinfo* pAddrInfo);
+int socketUDP(const char* targetHost, int targetPort, struct addrinfo* pAddrInfo);
 
 #ifdef __cplusplus
-};
+}
 #endif
 
 #endif /* !NETUTIL_H */
