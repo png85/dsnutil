@@ -183,6 +183,9 @@ if(BUILD_TESTING)
 
   add_executable(test-pretty_print test-pretty_print.cc)
   add_test(pretty_print.hh test-pretty_print)
+  if(LOG4CPP_FOUND)
+    target_link_libraries(test-pretty_print ${LOG4CPP_LIBRARIES})
+  endif(LOG4CPP_FOUND)
 
   #
   # Tests for netutil.[ch]

@@ -12,7 +12,7 @@ int main(void) {
         std::pair<std::string, float>("GOOG", 9.9f),
         std::pair<std::string, float>("DSN ", 13.37f),
         std::pair<std::string, float>("IBM ", 6.0f),
-        std::pair<std::string, float>("ACME", 1.5)
+        std::pair<std::string, float>("ACME", 1.5f)
     };
 
     std::function<void (std::string)> vector_dump = [&](std::string k) {
