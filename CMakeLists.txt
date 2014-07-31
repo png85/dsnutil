@@ -37,6 +37,8 @@ include(CTest)
 enable_testing()
 set(BUILDNAME "${BUILDNAME}" "Name of build on CDash dashboard")
 
+find_package(Threads)
+
 #
 # CPack configuration to build binary packages
 if(NOT DSNUTIL_SUBPROJECT)
@@ -148,6 +150,11 @@ endif(WANT_LOG4CPP AND LOG4CPP_FOUND)
 if(WANT_PARALLEL_FOR)
   list(APPEND libdsnutil_SOURCES parallel_for.cpp)
   list(APPEND libdsnutil_SOURCES parallel_for.h)
+  if(BUILD_TESTING)
+    add_executable(test-parallel_for test-parallel_for.cpp)
+    target_link_libraries(test-parallel_for dsnutil ${CMAKE_THREAD_LIBS_INIT})
+    add_test(parallel_for test-parallel_for)
+  endif(BUILD_TESTING)
 endif(WANT_PARALLEL_FOR)
 
 
