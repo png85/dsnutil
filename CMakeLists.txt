@@ -37,6 +37,8 @@ include(CTest)
 enable_testing()
 set(BUILDNAME "${BUILDNAME}" "Name of build on CDash dashboard")
 
+find_package(Threads)
+
 #
 # CPack configuration to build binary packages
 if(NOT DSNUTIL_SUBPROJECT)
@@ -51,6 +53,7 @@ option(BUILD_TESTING "Build tests for all components" OFF)
 option(WANT_LOG4CPP "Enable log4cpp support" ON)
 option(WANT_MPI "Enable MPI related classes" ON)
 option(WANT_CSV "Enable CSV utility classes" ON)
+option(WANT_PARALLEL_FOR "Enable C++11 threaded for loops" ON)
 
 #
 # Check for log4cpp framework
@@ -143,6 +146,17 @@ if(WANT_LOG4CPP AND LOG4CPP_FOUND)
     add_test(intercept_stream test-intercept_stream)
   endif(BUILD_TESTING)
 endif(WANT_LOG4CPP AND LOG4CPP_FOUND)
+
+if(WANT_PARALLEL_FOR)
+  list(APPEND libdsnutil_SOURCES parallel_for.cpp)
+  list(APPEND libdsnutil_SOURCES parallel_for.h)
+  if(BUILD_TESTING)
+    add_executable(test-parallel_for test-parallel_for.cpp)
+    target_link_libraries(test-parallel_for dsnutil ${CMAKE_THREAD_LIBS_INIT})
+    add_test(parallel_for test-parallel_for)
+  endif(BUILD_TESTING)
+endif(WANT_PARALLEL_FOR)
+
 
 #
 # libdsnutil main build target
