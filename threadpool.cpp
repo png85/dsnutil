@@ -24,6 +24,12 @@ ThreadPool::ThreadPool(size_t size)
 
 ThreadPool::~ThreadPool()
 {
+    stop();
+}
+
+
+void ThreadPool::stop()
+{
     {
         std::unique_lock<std::mutex> lock(queue_mutex);
         m_stop = true;
@@ -31,6 +37,6 @@ ThreadPool::~ThreadPool()
 
     condition.notify_all();
 
-    for (auto i=0; i<workers.size(); ++i)
-        workers[i].join();
+    for (auto& worker : workers)
+        worker.join();
 }
