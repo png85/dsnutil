@@ -54,6 +54,7 @@ option(WANT_LOG4CPP "Enable log4cpp support" ON)
 option(WANT_MPI "Enable MPI related classes" ON)
 option(WANT_CSV "Enable CSV utility classes" ON)
 option(WANT_PARALLEL_FOR "Enable C++11 threaded for loops" ON)
+option(WANT_THREADPOOL "Enable C++11 Thread Pool class" ON)
 
 #
 # Check for log4cpp framework
@@ -157,6 +158,16 @@ if(WANT_PARALLEL_FOR)
   endif(BUILD_TESTING)
 endif(WANT_PARALLEL_FOR)
 
+
+if(WANT_THREADPOOL)
+  list(APPEND libdsnutil_SOURCES threadpool.cpp)
+  list(APPEND libdsnutil_HEADERS threadpool.h)
+  if(BUILD_TESTING)
+    add_executable(test-threadpool test-threadpool.cpp)
+    target_link_libraries(test-threadpool dsnutil ${CMAKE_THREAD_LIBS_INIT})
+    add_test(threadpool test-threadpool)
+  endif(BUILD_TESTING)
+endif(WANT_THREADPOOL)
 
 #
 # libdsnutil main build target
