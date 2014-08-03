@@ -27,8 +27,8 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 # Enable more verbose warnings for Clang
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   message(STATUS "Enabling Clang specific compiler options...")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -ggdb")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -std=c++11")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -ggdb -std=c++11")
 endif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
 #
