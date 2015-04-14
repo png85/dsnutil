@@ -20,7 +20,7 @@ used in other projects.
 ## Building [![Build Status](https://travis-ci.org/png85/dsnutil.png?branch=master)](https://travis-ci.org/png85/dsnutil)
 Use CMake to configure and build as needed. Useful options might be:
 
-* WANT_MPI      - Compile MPI utility classes
+* WANT_MPI      - Compile MPI utility classes (currently disabled)
 * WANT_CSV      - Compile CSV parser
 * WANT_LOG4CPP  - Enable log4cpp support
 

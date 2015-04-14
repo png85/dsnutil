@@ -53,8 +53,7 @@ option(BUILD_TESTING "Build tests for all components" OFF)
 option(WANT_LOG4CPP "Enable log4cpp support" ON)
 option(WANT_MPI "Enable MPI related classes" ON)
 option(WANT_CSV "Enable CSV utility classes" ON)
-option(WANT_PARALLEL_FOR "Enable C++11 threaded for loops" ON)
-option(WANT_THREADPOOL "Enable C++11 Thread Pool class" ON)
+
 
 #
 # Check for log4cpp framework
@@ -79,7 +78,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Setup list of header files for system-wide installation
-set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh LoggingBase.h map.hh)
+set(libdsnutil_HEADERS "")
 
 
 #
@@ -113,26 +112,26 @@ endif(BUILD_TESTING AND WANT_CSV)
 
 #
 # Check for MPI libraries and build utility classes if they're found
-if(WANT_MPI)
-find_package(MPI)
-  if(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
-    # make sure mpicc/mpicxx get used instead of the regular compiler
-    set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
-    set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
+#if(WANT_MPI)
+#find_package(MPI)
+#  if(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
+#    # make sure mpicc/mpicxx get used instead of the regular compiler
+#    set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
+#    set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
+#
+#    add_library(dsnutil-mpi mpi/Job.cc mpi/BSend.cc mpi/RSend.cc mpi/SSend.cc mpi/Send.cc mpi/ReceiveFunctor.cc)
+#    set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
+#
+#    if(BUILD_TESTING AND WANT_LOG4CPP)
+#      add_executable(test-mpi test-mpi.cc)
+#      target_link_libraries(test-mpi dsnutil dsnutil-mpi)
+#      target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
+#      add_test(test-mpi test-mpi)
+#    endif(BUILD_TESTING AND WANT_LOG4CPP)
 
-    add_library(dsnutil-mpi mpi/Job.cc mpi/BSend.cc mpi/RSend.cc mpi/SSend.cc mpi/Send.cc mpi/ReceiveFunctor.cc)
-    set(libdsnutil_HEADERS ${libdsnutil_HEADERS} mpi.hh)
-
-    if(BUILD_TESTING AND WANT_LOG4CPP)
-      add_executable(test-mpi test-mpi.cc)
-      target_link_libraries(test-mpi dsnutil dsnutil-mpi)
-      target_link_libraries(test-mpi ${LOG4CPP_LIBRARIES})
-      add_test(test-mpi test-mpi)
-    endif(BUILD_TESTING AND WANT_LOG4CPP)
-
-    install(TARGETS dsnutil-mpi ARCHIVE DESTINATION lib)
-  endif(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
-endif(WANT_MPI)
+#    install(TARGETS dsnutil-mpi ARCHIVE DESTINATION lib)
+#  endif(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
+#endif(WANT_MPI)
 
 #
 # intercept_stream class to redirect std::ifstream through log4cpp
