@@ -84,7 +84,6 @@ set(libdsnutil_HEADERS hexdump.hh Singleton.hh assert.hh LoggingBase.h map.hh)
 
 #
 # Setup list of sources for our library
-set(libdsnutil_SOURCES hexdump.cc)
 if(WANT_CSV)
   set(CSV_SOURCES csv/Row.cc csv/Iterator.cc)
   set(libdsnutil_SOURCES ${libdsnutil_SOURCES} ${CSV_SOURCES})
@@ -148,27 +147,6 @@ if(WANT_LOG4CPP AND LOG4CPP_FOUND)
   endif(BUILD_TESTING)
 endif(WANT_LOG4CPP AND LOG4CPP_FOUND)
 
-if(WANT_PARALLEL_FOR)
-  list(APPEND libdsnutil_SOURCES parallel_for.cpp)
-  list(APPEND libdsnutil_SOURCES parallel_for.h)
-  if(BUILD_TESTING)
-    add_executable(test-parallel_for test-parallel_for.cpp)
-    target_link_libraries(test-parallel_for dsnutil ${CMAKE_THREAD_LIBS_INIT})
-    add_test(parallel_for test-parallel_for)
-  endif(BUILD_TESTING)
-endif(WANT_PARALLEL_FOR)
-
-
-if(WANT_THREADPOOL)
-  list(APPEND libdsnutil_SOURCES threadpool.cpp)
-  list(APPEND libdsnutil_HEADERS threadpool.h)
-  if(BUILD_TESTING)
-    add_executable(test-threadpool test-threadpool.cpp)
-    target_link_libraries(test-threadpool dsnutil ${CMAKE_THREAD_LIBS_INIT})
-    add_test(threadpool test-threadpool)
-  endif(BUILD_TESTING)
-endif(WANT_THREADPOOL)
-
 #
 # libdsnutil main build target
 add_library(dsnutil ${libdsnutil_SOURCES})
@@ -184,34 +162,6 @@ install(FILES ${libdsnutil_HEADERS} DESTINATION include/libdsnutil)
 
 
 if(BUILD_TESTING)
-  #
-  # Tests for hexdump
-  add_executable(test-hexdump test-hexdump.cc)
-  target_link_libraries(test-hexdump dsnutil)
-  if(LOG4CPP_FOUND AND WANT_LOG4CPP)
-    target_link_libraries(test-hexdump ${LOG4CPP_LIBRARIES})
-  endif(LOG4CPP_FOUND AND WANT_LOG4CPP)
-  add_test(hexdump.ostream test-hexdump "1")
-  if(LOG4CPP_FOUND AND WANT_LOG4CPP)
-    add_test(hexdump.log4cpp test-hexdump "2")
-  endif(LOG4CPP_FOUND AND WANT_LOG4CPP)
-
-  #
-  # Test for throwing assert(3) from assert.hh
-  add_executable(test-assert test-assert.cc)
-  add_test(assert.hh test-assert)
-
-  if(HAS_CXX11_LAMBDA)
-    add_executable(test-map test-map.cc)
-    add_test(map.hh test-map)
-  endif(HAS_CXX11_LAMBDA)
-
-  add_executable(test-pretty_print test-pretty_print.cc)
-  add_test(pretty_print.hh test-pretty_print)
-  if(LOG4CPP_FOUND)
-    target_link_libraries(test-pretty_print ${LOG4CPP_LIBRARIES})
-  endif(LOG4CPP_FOUND)
-
   #
   # Tests for netutil.[ch]
   if(NOT WIN32)
