@@ -132,18 +132,6 @@ endif(BUILD_TESTING AND WANT_CSV)
 #  endif(MPI_FOUND AND LOG4CPP_FOUND AND WANT_LOG4CPP)
 #endif(WANT_MPI)
 
-#
-# intercept_stream class to redirect std::ifstream through log4cpp
-if(WANT_LOG4CPP AND LOG4CPP_FOUND)
-  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} intercept_stream.cc)
-  set(libdsnutil_HEADERS ${libdsnutil_HEADERS} intercept_stream.hh)
-  if(BUILD_TESTING)
-    add_executable(test-intercept_stream test-intercept_stream.cc)
-    target_link_libraries(test-intercept_stream dsnutil)
-    target_link_libraries(test-intercept_stream ${LOG4CPP_LIBRARIES})
-    add_test(intercept_stream test-intercept_stream)
-  endif(BUILD_TESTING)
-endif(WANT_LOG4CPP AND LOG4CPP_FOUND)
 
 #
 # libdsnutil main build target
