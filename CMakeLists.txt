@@ -85,7 +85,6 @@ set(libdsnutil_HEADERS "")
 # Setup list of sources for our library
 if(WANT_CSV)
   set(CSV_SOURCES csv/Row.cc csv/Iterator.cc)
-  set(libdsnutil_SOURCES ${libdsnutil_SOURCES} ${CSV_SOURCES})
   set(libdsnutil_HEADERS ${libdsnutil_HEADERS} csv.hh)
   add_library(dsnutil-csv ${CSV_SOURCES})
   install(TARGETS dsnutil-csv ARCHIVE DESTINATION lib)
